@@ -1,4 +1,4 @@
-# 🚀 DevPath AI - SW 마이스터고 학생 맞춤형 로드맵 & 커리어 에이전트
+# 🚀 PathPorge AI - SW 마이스터고 학생 맞춤형 로드맵 & 커리어 에이전트
 
 > **하네스 엔지니어링(Harness Engineering)** 및 **프롬프트 엔지니어링(Prompt Engineering)** 기법을 활용하여 SW 마이스터고 학생들에게 실무 중심 학습 로드맵과 1:1 커리어 피드백을 제공하는 AI 에이전트 서비스입니다.
 
