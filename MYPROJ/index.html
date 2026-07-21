@@ -3,43 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PathForge · AI 학습 로드맵</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>AlgoVisualizer · 알고리즘 시각화 & 복잡도 분석</title>
+    <style>
+      /* 앱이 마운트되기 전/실패했을 때 보이는 기본 화면 (백지 방지) */
+      body { margin: 0; background: #0b1020; color: #e2e8f0;
+             font-family: ui-sans-serif, system-ui, 'Segoe UI', 'Noto Sans KR', sans-serif; }
+      #boot-fallback { display: flex; min-height: 100vh; flex-direction: column;
+                       align-items: center; justify-content: center; gap: 10px; padding: 24px;
+                       text-align: center; }
+      #boot-fallback h1 { margin: 0; font-size: 20px; }
+      #boot-fallback p { margin: 0; font-size: 13px; color: #94a3b8; max-width: 460px; line-height: 1.6; }
+      #boot-fallback code { background: #141b32; padding: 2px 6px; border-radius: 4px; }
+    </style>
   </head>
   <body>
-    <header class="topbar">
-      <div class="brand">
-        <span class="logo">🧭</span>
-        <span class="brand-name">PathForge</span>
+    <div id="root">
+      <!-- React가 마운트되면 이 내용은 교체된다. 계속 보인다면 JS 로딩이 실패한 것이다. -->
+      <div id="boot-fallback">
+        <h1>AlgoVisualizer AI</h1>
+        <p>앱을 불러오는 중입니다…</p>
+        <p>
+          이 화면이 계속 보인다면 개발 서버가 켜져 있는지 확인하세요.<br />
+          <code>cd MYPROJ</code> → <code>npm install</code> → <code>npm run dev</code><br />
+          그 후 터미널에 표시된 주소(<code>http://localhost:5173</code>)로 접속하세요.
+        </p>
+        <p>
+          ⚠️ <code>index.html</code> 파일을 더블클릭해서 열면 동작하지 않습니다.
+          반드시 개발 서버 주소로 접속해야 합니다.
+        </p>
       </div>
-      <button id="resetBtn" class="ghost-btn">새 대화</button>
-    </header>
-
-    <main class="chat">
-      <div id="messages" class="messages"></div>
-    </main>
-
-    <footer class="composer">
-      <div class="composer-inner">
-        <div id="chips" class="chips"></div>
-        <div class="input-row">
-          <textarea
-            id="input"
-            class="chat-input"
-            rows="1"
-            placeholder="무엇이든 편하게 물어보세요"
-          ></textarea>
-          <button id="sendBtn" class="send-btn" aria-label="보내기">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-              <path d="M12 19V5M12 5l-6 6M12 5l6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-        </div>
-        <p class="composer-hint">PathForge AI와 자유롭게 대화하고, 필요할 땐 전공별 학습 로드맵도 받아보세요.</p>
-      </div>
-    </footer>
-
-    <script src="roadmaps.js"></script>
-    <script src="app.js"></script>
+    </div>
+    <noscript>
+      <p style="padding: 24px">이 앱을 사용하려면 브라우저에서 JavaScript를 활성화해야 합니다.</p>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
