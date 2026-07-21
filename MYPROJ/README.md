@@ -11,7 +11,7 @@
 |---|---|
 | 목적 | 알고리즘 시각화 · 시간/공간 복잡도 분석 · 실무 활용처 제시 |
 | 대상 | SW 마이스터고 학생, CS/알고리즘 입문자 |
-| 실행 | `npm install && npm run dev` → http://localhost:5173 |
+| 실행 | `npm install && npm run dev` → 터미널에 표시된 주소(기본 http://localhost:5173) |
 | 배포 | GitHub Pages (`npm run deploy`) |
 
 ## 2. 기술 스택
@@ -152,47 +152,66 @@ LLM 연동 시(§8) 활용처를 AI가 동적으로 생성할 수 있으며, 실
 
 ## 7. 프로젝트 구조
 
-CLAUDE.md 모듈 경계 분리 원칙에 따라 4계층으로 구성한다.
+CLAUDE.md 모듈 경계 분리 원칙에 따라 4계층(`types` / `algorithms` / `components` / `utils`)으로
+구성하고, 그 안에서도 도메인 개념(알고리즘 분류, 2D/3D 렌더링)에 맞춰 폴더를 세분화했다.
 
 ```
 src/
-  types/                     # 도메인 타입 + Zod 스키마 (단일 진실 공급원)
-    algorithm.ts             #   AlgorithmMeta, ComplexityInfo, StepState 등
+  types/                        # 도메인 타입 + Zod 스키마 (단일 진실 공급원)
+    algorithm.ts                #   AlgorithmMeta, ComplexityInfo, StepState 등
 
-  algorithms/                # 정렬·탐색·그래프·DP 시각화 스텝 로직 (UI 비의존)
-    sorting.ts                 버블·선택·삽입·병합·퀵
-    treeSorting.ts              힙·트리
-    searching.ts                선형·이진 탐색
-    graph.ts                    BFS·DFS
-    dp.ts                       피보나치 DP
-    index.ts                  # 레지스트리: 메타데이터(복잡도·활용처) + 실행기
-    __tests__/                # 알고리즘 단위 테스트
+  algorithms/                   # 정렬·탐색·그래프·DP 스텝 로직 (UI 비의존)
+                                 # → AlgorithmCategory 타입과 1:1로 대응하는 폴더 구조
+    sorting/
+      comparisonSorts.ts          버블·선택·삽입·병합·퀵
+      treeBasedSorts.ts           힙·트리 (BST)
+      __tests__/
+    searching/
+      searching.ts                 선형·이진 탐색
+      __tests__/
+    graph/
+      graph.ts                     BFS·DFS
+      __tests__/
+    dp/
+      dp.ts                        피보나치 DP
+      __tests__/
+    index.ts                    # 레지스트리: 메타데이터(복잡도·활용처) + 실행기 등록
+    __tests__/catalog.test.ts   # 카탈로그 무결성(스키마·id 중복·활용처 존재) 테스트
 
-  utils/                     # 컴플렉서티 계산 & Helper 함수
-    complexity.ts             # Big-O 등급 분류, 배지 색상, 비교 함수
-    llm.ts                    # LLM 응답 Sanitizer + Zod 검증 + Fallback
-    sampleData.ts              # 샘플 입력 생성, 카탈로그 검증
-    capabilities.ts            # WebGL 지원 여부 탐지
-    __tests__/                 # 유틸 단위 테스트
-
-  components/                # UI 컴포넌트
+  components/                   # UI 컴포넌트
     visualization/
-      Scene3D.tsx              3D 씬 (카메라·조명·바닥·OrbitControls)
-      ArrayBars3D.tsx          물리 구동 3D 막대
-      GraphScene3D.tsx         물리 구동 3D 그래프
-      ArrayCanvas.tsx / GraphCanvas.tsx   2D 렌더링
-    ControlPanel.tsx           재생 컨트롤
-    ComplexityPanel.tsx        복잡도 배지 패널
-    UseCasePanel.tsx           실무 활용처 패널
-    AlgorithmSidebar.tsx       알고리즘 선택 사이드바
-    ErrorBoundary.tsx          렌더링 예외 방어
+      2d/
+        ArrayCanvas.tsx           Canvas API 배열 렌더링
+        GraphCanvas.tsx           SVG 그래프 렌더링
+      3d/
+        Scene3D.tsx               3D 씬 (카메라·조명·바닥·OrbitControls)
+        ArrayBars3D.tsx           물리 구동 3D 막대
+        GraphScene3D.tsx          물리 구동 3D 그래프
+    ControlPanel.tsx              재생 컨트롤
+    ComplexityPanel.tsx           복잡도 배지 패널
+    UseCasePanel.tsx              실무 활용처 패널
+    AlgorithmSidebar.tsx          알고리즘 선택 사이드바 (카테고리별 그룹)
+    ErrorBoundary.tsx             렌더링 예외 방어
 
-  physics/                   # 자체 구현 물리 엔진 (렌더러 비의존)
+  utils/                        # 컴플렉서티 계산 & Helper 함수
+    complexity.ts                # Big-O 등급 분류, 배지 색상, 비교 함수
+    llm.ts                       # LLM 응답 Sanitizer + Zod 검증 + Fallback
+    sampleData.ts                 # 샘플 입력 생성, 카탈로그 검증
+    capabilities.ts               # WebGL 지원 여부 탐지
+    __tests__/
+
+  physics/                      # 자체 구현 물리 엔진 (렌더러 비의존)
     engine.ts  layout.ts  __tests__/
 
   hooks/
-    useStepPlayer.ts           재생 컨트롤 훅 (타이머 useRef + cleanup)
+    useStepPlayer.ts              재생 컨트롤 훅 (타이머 useRef + cleanup)
 ```
+
+**폴더-도메인 대응 원칙**: `algorithms/`의 하위 폴더는 `types/algorithm.ts`의
+`AlgorithmCategory`(`sorting`/`searching`/`graph`/`dp`)와 정확히 일치하고,
+`components/visualization/`은 `App.tsx`의 `viewMode`(`'2d' | '3d'`)와 정확히 대응한다.
+테스트는 해당 구현 코드와 같은 폴더의 `__tests__/`에 두어(콜로케이션) 코드와 테스트가 항상
+함께 이동하도록 했다.
 
 ## 8. LLM 연동 (선택)
 
@@ -218,7 +237,7 @@ VITE_LLM_API_KEY=여기에_발급받은_키
 # 하네스 검증
 npx tsc --noEmit   # 타입 검사
 npm run lint       # ESLint
-npm test           # Vitest 단위 테스트
+npm test           # Vitest 단위 테스트 (93개)
 npm run build      # 프로덕션 빌드 (상대 경로 base)
 
 # GitHub Pages 배포
@@ -230,9 +249,16 @@ npm run deploy      # build:gh-pages → gh-pages -d dist
 
 ## 10. 트러블슈팅
 
-1. **화면이 비어 보임**: `index.html`을 더블클릭해 열면 동작하지 않는다. 반드시
-   `npm run dev` 실행 후 터미널에 표시된 주소로 접속해야 한다.
-2. **폴더 위치**: `npm run dev`는 `MYPROJ` 디렉터리 안에서 실행해야 한다.
-3. **포트 충돌**: 5173이 사용 중이면 Vite가 다른 포트로 뜬다. 터미널에 찍힌 주소를 사용한다.
-4. 백지 방지 장치 내장: JS 로딩 실패 시 안내 문구(`index.html`), 렌더링 예외 시 에러
-   바운더리(`ErrorBoundary`), WebGL 미지원 시 3D→2D 자동 전환(`capabilities.ts`).
+1. **화면이 비어 보임**: `index.html`을 더블클릭해 열거나 VSCode **Live Server** 확장(포트 5500)으로
+   열면 동작하지 않는다. 정적 서버는 TypeScript(`.tsx`)를 실행할 수 없다. 반드시 `npm run dev`로
+   뜬 Vite 서버 주소로 접속해야 한다. (`index.html`에 원인을 자동으로 짚어주는 진단 스크립트가
+   내장되어 있다 — 2초 후에도 마운트가 안 되면 원인을 화면에 표시한다.)
+2. **VSCode 터미널에서 `npm: command not found`**: Node.js가 설치되어 있어도 PATH 변경이
+   이미 열려 있던 VSCode 프로세스에 반영되지 않은 경우다. `Path`에 `C:\Program Files\nodejs`가
+   있는지 확인한 뒤, 작업 관리자에서 **모든** `Code.exe` 프로세스를 완전히 종료하고(창을 그냥
+   닫는 것만으로는 부족할 수 있다) VSCode를 재실행한다.
+3. **폴더 위치**: `npm run dev`는 `MYPROJ` 디렉터리 안에서 실행해야 한다.
+4. **포트 충돌**: 5173이 사용 중이면 Vite가 다른 포트(5174 등)로 자동으로 뜬다. 터미널에 찍힌
+   주소를 그대로 사용하면 된다.
+5. 백지 방지 장치 내장: JS 로딩 실패 시 안내 문구(`index.html`), 렌더링 예외 시 에러
+   바운더리(`ErrorBoundary`), WebGL 미지원 시 3D→2D 자동 전환(`utils/capabilities.ts`).
