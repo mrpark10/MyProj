@@ -9,7 +9,7 @@ import { bfs, dfs } from '@/algorithms/graph';
 import { fibonacciDP } from '@/algorithms/dp';
 import { ALGORITHMS } from '@/algorithms';
 import { algorithmMetaSchema } from '@/types/algorithm';
-import { SAMPLE_GRAPH } from '@/lib/sampleData';
+import { SAMPLE_GRAPH } from '@/utils/sampleData';
 
 const SORTERS = { bubbleSort, selectionSort, insertionSort, mergeSort, quickSort, heapSort, treeSort };
 const CASES: number[][] = [

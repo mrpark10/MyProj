@@ -1,15 +1,51 @@
+# ── Dependencies ──────────────────────────────
 node_modules
+.pnp
+.pnp.js
+
+# ── Build output ──────────────────────────────
 dist
 dist-ssr
-coverage
+build
 *.local
+
+# ── Vite ──────────────────────────────────────
+.vite
+vite.config.ts.timestamp-*
+
+# ── TypeScript ────────────────────────────────
 *.tsbuildinfo
 
-# 환경변수 (API 키 포함 — 절대 커밋 금지)
+# ── Testing / coverage ────────────────────────
+coverage
+.nyc_output
+
+# ── Environment variables (API 키 포함 — 절대 커밋 금지) ──
 .env
 .env.local
 .env.*.local
 
-.DS_Store
+# ── Logs ──────────────────────────────────────
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+logs
+*.log
+
+# ── Editor / IDE ──────────────────────────────
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ── OS ────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini

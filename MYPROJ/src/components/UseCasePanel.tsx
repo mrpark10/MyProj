@@ -5,7 +5,7 @@
 import { useEffect, useState } from 'react';
 import { Briefcase, Sparkles } from 'lucide-react';
 import type { AlgorithmMeta, UseCase } from '@/types/algorithm';
-import { loadUseCases } from '@/lib/llm';
+import { loadUseCases } from '@/utils/llm';
 
 interface UseCasePanelProps {
   meta: AlgorithmMeta;
