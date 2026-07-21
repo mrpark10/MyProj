@@ -7,7 +7,7 @@ import { Activity, Box, Info, Square } from 'lucide-react';
 import { ALGORITHMS } from '@/algorithms';
 import { AlgorithmSidebar } from '@/components/AlgorithmSidebar';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
-import { isWebGLAvailable } from '@/lib/capabilities';
+import { isWebGLAvailable } from '@/utils/capabilities';
 import { ComplexityPanel } from '@/components/ComplexityPanel';
 import { ControlPanel } from '@/components/ControlPanel';
 import { UseCasePanel } from '@/components/UseCasePanel';
@@ -17,7 +17,7 @@ import { ArrayBars3D } from '@/components/visualization/ArrayBars3D';
 import { GraphScene3D } from '@/components/visualization/GraphScene3D';
 import { Scene3D } from '@/components/visualization/Scene3D';
 import { useStepPlayer } from '@/hooks/useStepPlayer';
-import { createRandomArray, SAMPLE_GRAPH, validateAlgorithms } from '@/lib/sampleData';
+import { createRandomArray, SAMPLE_GRAPH, validateAlgorithms } from '@/utils/sampleData';
 import { isArrayAlgorithm, isArrayStep, isGraphStep, type StepState } from '@/types/algorithm';
 
 /** 메타데이터가 스키마를 통과한 알고리즘만 사용한다. */

@@ -28,14 +28,43 @@
           그 후 터미널에 표시된 주소(<code>http://localhost:5173</code>)로 접속하세요.
         </p>
         <p>
-          ⚠️ <code>index.html</code> 파일을 더블클릭해서 열면 동작하지 않습니다.
-          반드시 개발 서버 주소로 접속해야 합니다.
+          ⚠️ <code>index.html</code> 파일을 더블클릭해서 열거나 VSCode의
+          <b>Live Server</b> 확장(포트 5500)으로 열면 동작하지 않습니다.
+          정적 서버는 TypeScript(.tsx)를 실행할 수 없습니다.
+          반드시 <code>npm run dev</code>로 뜬 Vite 서버 주소로 접속해야 합니다.
         </p>
       </div>
     </div>
     <noscript>
       <p style="padding: 24px">이 앱을 사용하려면 브라우저에서 JavaScript를 활성화해야 합니다.</p>
     </noscript>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="./src/main.tsx"></script>
+    <script>
+      // 모듈 스크립트(main.tsx)가 실행되지 못하는 경우를 대비한 이중 안전장치.
+      // Live Server 등 정적 서버로 열면 브라우저가 .tsx 를 파싱하지 못해 위 <script type="module"> 이
+      // 조용히 실패하고, 아래 일반 스크립트만 실행된다. 일정 시간 후에도 React가 마운트되지 않았다면
+      // (즉 #boot-fallback 이 여전히 DOM에 남아있다면) 원인을 구체적으로 짚어준다.
+      (function () {
+        setTimeout(function () {
+          var fallback = document.getElementById('boot-fallback');
+          if (!fallback) return; // React 가 정상적으로 마운트되어 이미 교체됨
+
+          var isStaticPort = /^(5500|5501|5502)$/.test(window.location.port);
+          var hint = isStaticPort
+            ? '지금 포트가 <b>' + window.location.port + '</b> 입니다 — 이는 VSCode Live Server 확장의 기본 포트입니다. ' +
+              'Live Server는 정적 파일만 서빙하며 TypeScript를 실행할 수 없어 화면이 뜨지 않습니다.'
+            : '현재 주소(' + window.location.origin + ')가 Vite 개발 서버가 아닌 것 같습니다.';
+
+          fallback.innerHTML =
+            '<h1>⚠️ 잘못된 방식으로 열렸습니다</h1>' +
+            '<p>' + hint + '</p>' +
+            '<p>해결 방법: VSCode에서 <b>Live Server로 열기</b>를 사용하지 마세요.<br/>' +
+            '대신 통합 터미널에서 아래 명령을 실행하세요.</p>' +
+            '<p><code>cd MYPROJ</code> → <code>npm install</code> → <code>npm run dev</code></p>' +
+            '<p>터미널에 출력된 <code>http://localhost:5173</code> 주소로 접속하세요 ' +
+            '(이 문서를 직접 연 주소가 아닙니다).</p>';
+        }, 2000);
+      })();
+    </script>
   </body>
 </html>

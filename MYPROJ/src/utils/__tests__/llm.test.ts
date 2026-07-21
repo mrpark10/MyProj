@@ -1,7 +1,7 @@
 /**
  * LLM 응답 Sanitizer / Zod 검증 단위 테스트 (CLAUDE.md 규칙 3 검증).
  */
-import { parseUseCases, sanitizeJsonText } from '@/lib/llm';
+import { parseUseCases, sanitizeJsonText } from '@/utils/llm';
 
 describe('sanitizeJsonText', () => {
   it('마크다운 코드펜스를 제거한다', () => {
