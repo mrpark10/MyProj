@@ -3,11 +3,11 @@
  * UI 레이어는 이 레지스트리만 참조하고, 알고리즘 구현 세부는 알지 못한다.
  */
 import type { AlgorithmDef } from '@/types/algorithm';
-import { bubbleSort, insertionSort, mergeSort, quickSort, selectionSort } from './sorting';
-import { heapSort, treeSort } from './treeSorting';
-import { binarySearch, linearSearch } from './searching';
-import { bfs, dfs } from './graph';
-import { fibonacciDP } from './dp';
+import { bubbleSort, insertionSort, mergeSort, quickSort, selectionSort } from './sorting/comparisonSorts';
+import { heapSort, treeSort } from './sorting/treeBasedSorts';
+import { binarySearch, linearSearch } from './searching/searching';
+import { bfs, dfs } from './graph/graph';
+import { fibonacciDP } from './dp/dp';
 
 export const ALGORITHMS: AlgorithmDef[] = [
   {
