@@ -1,6 +1,10 @@
 # 🤖 CLAUDE.md - 알고리즘 시각화 & 복잡도 분석 플랫폼 개발 지침 (Master Protocol)
 
+<<<<<<< HEAD
 본 문서는 Claude Code 에이전트가 React(Vite) 기반 알고리즘 시각화 및 복잡도 분석 플랫폼 프로젝트(`MYPROJ`)를 개발할 때 반드시 준수해야 하는 **하네스 엔지니어링(Harness Engineering)**, **프롬프트 엔지니어링**, 그리고 **상세 오류 대응 및 준수 사항** 지침이다.
+=======
+본 문서는 Claude Code 에이전트가 React(Vite) 기반 알고리즘 시각화 및 복잡도 분석 플랫폼 프로젝트(`algo-visualizer`)를 개발할 때 반드시 준수해야 하는 **하네스 엔지니어링(Harness Engineering)**, **프롬프트 엔지니어링**, 그리고 **상세 오류 대응 및 준수 사항** 지침이다.
+>>>>>>> 8f10ced (fe)
 
 ---
 

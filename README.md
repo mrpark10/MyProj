@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🚀 PathForge AI - SW 마이스터고 학생 맞춤형 로드맵 & 커리어 에이전트(Team JPG)
 
 > **하네스 엔지니어링(Harness Engineering)** 및 **프롬프트 엔지니어링(Prompt Engineering)** 기법을 활용하여 SW 마이스터고 학생들에게 실무 중심 학습 로드맵과 1:1 커리어 피드백을 제공하는 AI 에이전트 서비스입니다.
@@ -40,3 +41,52 @@
                                                                         │ (3회 실패 시)
                                                                         ▼
                                                                 [Fallback Data]
+=======
+# AlgoVisualizer Workspace
+
+이 워크스페이스는 `algo-visualizer/` 폴더 안에 React + TypeScript 기반의 알고리즘 시각화 앱을 포함하고 있습니다.
+
+## 주요 내용
+
+- `algo-visualizer/` : 실제 애플리케이션 소스 코드, 빌드 설정, 문서가 위치한 메인 프로젝트 폴더입니다.
+- `CLAUDE.md` : 프로젝트 개발 지침 및 프롬프트 엔지니어링 노트입니다.
+- `auth_manager.py`, `greeter.py` : 워크스페이스에 포함된 추가 유틸리티 파일로, 메인 앱 실행과는 별개입니다.
+
+## 개발 시작
+
+1. `cd algo-visualizer`
+2. `npm install`
+3. `npm run dev`
+4. 브라우저에서 Vite가 표시하는 주소로 접속
+
+> 핵심 앱 문서는 `algo-visualizer/README.md`에 있습니다. 이 파일은 `algo-visualizer` 내부 앱에 대한 설치, 실행, 폴더 구조, 기능 설명을 담고 있습니다.
+
+## 워크스페이스 구조
+
+```
+.
+├─ CLAUDE.md
+├─ auth_manager.py
+├─ greeter.py
+└─ algo-visualizer/
+   ├─ README.md
+   ├─ index.html
+   ├─ package.json
+   ├─ tsconfig.json
+   ├─ src/
+   │  ├─ App.tsx
+   │  ├─ main.tsx
+   │  ├─ algorithms/
+   │  ├─ components/
+   │  ├─ lib/
+   │  ├─ physics/
+   │  ├─ types/
+   │  └─ ...
+   └─ ...
+```
+
+## 주의 사항
+
+- `algo-visualizer` 폴더가 메인 앱입니다. 루트 폴더의 다른 파일은 앱 동작에 필수적이지 않습니다.
+- `algo-visualizer/README.md`를 참고하여 실제 실행 방법과 앱 기능을 확인하세요.
+>>>>>>> 8f10ced (fe)

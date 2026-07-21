@@ -1,0 +1,15 @@
+node_modules
+dist
+dist-ssr
+coverage
+*.local
+*.tsbuildinfo
+
+# 환경변수 (API 키 포함 — 절대 커밋 금지)
+.env
+.env.local
+.env.*.local
+
+.DS_Store
+.vscode/*
+!.vscode/extensions.json

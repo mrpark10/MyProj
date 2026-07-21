@@ -1,0 +1,251 @@
+/* PathForge — 토스(Toss) 디자인 스타일
+ * 넉넉한 여백, 라운드, 토스 블루(#3182F6), 부드러운 그림자, 미니멀 */
+
+:root {
+  --blue: #3182f6;
+  --blue-dark: #1b64da;
+  --blue-weak: #e8f2ff;
+  --bg: #ffffff;
+  --gray-bg: #f2f4f6;
+  --gray-card: #f9fafb;
+  --text: #191f28;
+  --text-sub: #4e5968;
+  --text-tertiary: #8b95a1;
+  --border: #e5e8eb;
+  --green: #15c47e;
+  --amber: #ff9500;
+  --red: #f04452;
+  --shadow: 0 6px 24px rgba(0, 27, 55, 0.08);
+  --radius-lg: 20px;
+  --radius-md: 14px;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--gray-bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Pretendard", system-ui,
+    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.01em;
+}
+
+/* 상단바 */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.brand { display: flex; align-items: center; gap: 8px; }
+.logo { font-size: 22px; }
+.brand-name { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
+.ghost-btn {
+  border: none;
+  background: var(--gray-bg);
+  color: var(--text-sub);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.ghost-btn:hover { background: #e9ecef; }
+
+/* 채팅 영역 */
+.chat {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+}
+.messages {
+  width: 100%;
+  max-width: 720px;
+  padding: 24px 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 메시지 공통 */
+.msg { display: flex; max-width: 100%; animation: rise 0.28s ease; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.msg.user { justify-content: flex-end; }
+.msg.ai { justify-content: flex-start; }
+
+.bubble {
+  padding: 13px 16px;
+  border-radius: 18px;
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 80%;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.msg.user .bubble {
+  background: var(--blue);
+  color: #fff;
+  border-bottom-right-radius: 6px;
+}
+.msg.ai .bubble {
+  background: #fff;
+  color: var(--text);
+  border-bottom-left-radius: 6px;
+  box-shadow: var(--shadow);
+}
+
+/* AI 아바타 + 이름 */
+.ai-row { display: flex; flex-direction: column; gap: 6px; max-width: 88%; }
+.ai-name {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 700; color: var(--text-tertiary);
+  padding-left: 4px;
+}
+.ai-avatar {
+  width: 20px; height: 20px; border-radius: 999px;
+  background: linear-gradient(135deg, #3182f6, #6ba6ff);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 11px;
+}
+.ai-badge {
+  font-size: 10.5px; font-weight: 700; color: var(--blue-dark);
+  background: var(--blue-weak); padding: 2px 7px; border-radius: 999px;
+}
+
+/* 타이핑 인디케이터 */
+.typing { display: flex; gap: 5px; padding: 16px 18px; }
+.typing span {
+  width: 7px; height: 7px; border-radius: 999px; background: #c4ccd4;
+  animation: blink 1.2s infinite ease-in-out;
+}
+.typing span:nth-child(2) { animation-delay: 0.2s; }
+.typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes blink {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+
+/* 로드맵 카드 */
+.roadmap-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 22px;
+  max-width: 88%;
+}
+.roadmap-card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
+.rc-emoji {
+  width: 44px; height: 44px; border-radius: 14px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.rc-title { font-size: 17px; font-weight: 800; margin: 0; }
+.rc-sub { font-size: 13px; color: var(--text-tertiary); margin: 2px 0 0; }
+
+.steps { margin-top: 18px; display: flex; flex-direction: column; }
+.step { display: flex; gap: 14px; }
+.step-rail { display: flex; flex-direction: column; align-items: center; }
+.step-num {
+  width: 30px; height: 30px; border-radius: 999px;
+  background: var(--blue-weak); color: var(--blue);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800; flex-shrink: 0;
+}
+.step-line { width: 2px; flex: 1; background: var(--border); margin: 4px 0; }
+.step:last-child .step-line { display: none; }
+.step-body { padding-bottom: 22px; flex: 1; }
+.step:last-child .step-body { padding-bottom: 0; }
+.step-title { font-size: 15px; font-weight: 700; margin: 4px 0 6px; }
+.step-desc { font-size: 13px; color: var(--text-sub); line-height: 1.55; margin: 8px 0 8px; }
+
+.topics { display: flex; flex-wrap: wrap; gap: 6px; }
+.topic {
+  font-size: 11.5px; font-weight: 600; color: var(--text-sub);
+  background: var(--gray-card); border: 1px solid var(--border);
+  padding: 3px 9px; border-radius: 8px;
+}
+
+.badges { display: flex; flex-wrap: wrap; gap: 6px; }
+.badge {
+  font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px;
+  background: var(--gray-bg); color: var(--text-sub);
+}
+.badge.dif-beginner { background: #e7f9f1; color: #14ae6b; }
+.badge.dif-intermediate { background: var(--blue-weak); color: var(--blue-dark); }
+.badge.dif-advanced { background: #ffeef0; color: var(--red); }
+
+.rc-footer {
+  margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border);
+  font-size: 13px; color: var(--text-tertiary);
+  display: flex; align-items: center; gap: 6px;
+}
+
+/* 옵션(전공 선택) 칩 */
+.option-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.option-chip {
+  border: 1px solid var(--border); background: #fff;
+  border-radius: 999px; padding: 9px 15px;
+  font-size: 14px; font-weight: 700; color: var(--text-sub);
+  cursor: pointer; transition: all 0.15s;
+}
+.option-chip:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-weak); }
+
+/* 하단 입력 */
+.composer {
+  flex-shrink: 0;
+  background: linear-gradient(to top, var(--gray-bg) 70%, rgba(242,244,246,0));
+  display: flex;
+  justify-content: center;
+  padding: 8px 20px 18px;
+}
+.composer-inner { width: 100%; max-width: 720px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.suggest-chip {
+  border: none; background: #fff; box-shadow: var(--shadow);
+  border-radius: 999px; padding: 9px 15px;
+  font-size: 13px; font-weight: 600; color: var(--text-sub);
+  cursor: pointer; transition: transform 0.12s;
+}
+.suggest-chip:hover { transform: translateY(-1px); color: var(--blue); }
+
+.input-row {
+  display: flex; align-items: flex-end; gap: 8px;
+  background: #fff; border-radius: 22px; padding: 8px 8px 8px 18px;
+  box-shadow: var(--shadow);
+}
+.chat-input {
+  flex: 1; border: none; outline: none; resize: none;
+  font-family: inherit; font-size: 15px; line-height: 1.5;
+  max-height: 140px; padding: 8px 0; background: transparent; color: var(--text);
+}
+.chat-input::placeholder { color: var(--text-tertiary); }
+.send-btn {
+  width: 40px; height: 40px; border-radius: 999px; border: none;
+  background: var(--blue); color: #fff; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: background 0.15s, transform 0.12s;
+}
+.send-btn:hover { background: var(--blue-dark); }
+.send-btn:disabled { background: #c4ccd4; cursor: default; }
+.composer-hint {
+  text-align: center; font-size: 11px; color: var(--text-tertiary);
+  margin: 10px 0 0;
+}
+
+@media (max-width: 520px) {
+  .bubble, .roadmap-card, .ai-row { max-width: 92%; }
+}
