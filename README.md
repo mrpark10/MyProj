@@ -22,7 +22,7 @@
 - **Icons**: Lucide-react
 
 ### AI & Harness Layer
-- **Engine**: OpenAI API / Claude API
+- **Engine**: Gemini API
 - **Validation**: Zod (Schema Enforcement)
 - **Prompt Engineering**: Persona Prompting, Few-Shot, Chain-of-Thought (CoT)
 - **Harness Control**: Self-Correction Loop (Max 3 Retries), Fallback Mechanism
