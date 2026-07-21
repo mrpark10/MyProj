@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PathForge · AI 학습 로드맵</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">🧭</span>
+        <span class="brand-name">PathForge</span>
+      </div>
+      <button id="resetBtn" class="ghost-btn">새 대화</button>
+    </header>
+
+    <main class="chat">
+      <div id="messages" class="messages"></div>
+    </main>
+
+    <footer class="composer">
+      <div class="composer-inner">
+        <div id="chips" class="chips"></div>
+        <div class="input-row">
+          <textarea
+            id="input"
+            class="chat-input"
+            rows="1"
+            placeholder="무엇이든 편하게 물어보세요"
+          ></textarea>
+          <button id="sendBtn" class="send-btn" aria-label="보내기">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+              <path d="M12 19V5M12 5l-6 6M12 5l6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+        <p class="composer-hint">PathForge AI와 자유롭게 대화하고, 필요할 땐 전공별 학습 로드맵도 받아보세요.</p>
+      </div>
+    </footer>
+
+    <script src="roadmaps.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

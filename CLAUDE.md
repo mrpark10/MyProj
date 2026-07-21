@@ -1,64 +1,107 @@
-넌 한국어로 답변해야해
-# 🤖 Claude Code 프로젝트 개발 지침 & 규칙
+# 🤖 CLAUDE.md - DevPath AI 개발 및 에이전트 제어 지침 (Master Protocol)
 
-본 프로젝트는 Claude Code 및 Fable 5를 활용하여 개발을 진행합니다.
-모든 AI 에이전트는 코드 품질 유지, 시스템 안전성, 아키텍처 일관성을 위해 아래 규칙을 엄격히 준수해야 합니다.
+본 문서는 Claude Code 에이전트가 React(Vite) 기반 프로젝트(`MYPROJ`)를 개발할 때 반드시 준수해야 하는 **하네스 엔지니어링(Harness Engineering)**, **프롬프트 엔지니어링**, 그리고 **상세 오류 대응 및 준수 사항** 지침이다.
 
 ---
 
-## 🛠️ 빌드, 테스트 및 린트 명령어
+## 🎯 1. 프로젝트 정체성 & 도메인 맥락
 
-코드 수정이나 검증 시 다음 표준 명령어를 사용하세요 (프로젝트 스택에 맞게 수정하여 사용):
-
-- **빌드:** `npm run build`
-- **개발 서버 실행:** `npm run dev`
-- **린트 검사:** `npm run lint`
-- **린트 자동 수정:** `npm run lint:fix`
-- **단위 테스트 실행:** `npm run test`
-- **단일 테스트 파일 실행:** `npx jest 경로/모듈명.test.ts`
-- **타입 검사:** `npx tsc --noEmit`
+* **프로젝트명**: DevPath AI
+* **기술 스택**: React (Vite), TypeScript, Tailwind CSS, Zod, Lucide-react
+* **목적**: SW 마이스터고 학생 맞춤형 직무별(웹/앱/AI/DevOps) 로드맵 및 챗봇 서비스
+* **타깃 사용자**: SW 마이스터고 학생
+  * ❌ 대학 학술/이론 위주 커리큘럼 (예: 수치해석학, 정밀 가공학 등)
+  * O 실무 중심 스택, 토이 프로젝트, 캡스톤 디자인 주제, 포트폴리오 및 GitHub 연동 중심
+* **에이전트 역할**: IT 현업 개발 리드이자 SW 마이스터고 학생들의 1:1 멘토
 
 ---
 
-## 📌 필수 준수 규칙 (Strict Rules)
+## ⚡ 2. 필수 실행 및 검증 명령어 (Standard Commands)
 
-### 1. 하네스 및 검증 (Harness & Verification)
-- **완료 전 검증 필수:** `npm run test` 및 `npm run lint`를 실행하여 통과를 확인하기 전에는 작업을 완료로 표시하지 마세요.
-- **자율 자가 수정 (Self-Correction):** 코드 수정 후 빌드나 테스트가 실패하면, 에러 로그를 분석하여 최대 3회까지 스스로 수정 후 재시도하세요.
-- **격리 환경 실행:** DB 변경이나 파괴적인 시스템 작업은 반드시 지정된 Mock 환경이나 샌드박스 내에서 수행하세요.
+에이전트는 코드 작성 및 수정 후 반드시 아래 검증 명령어를 실행하여 에러 유무를 스스로 체크해야 한다.
 
-### 2. 아키텍처 및 코드 스타일
-- **모듈 경계 준수:** UI 레이어, 핵심 비즈니스 로직, 하네스(검증) 레이어 간의 경계를 엄격히 분리하세요. UI 컴포넌트 내에 데이터 검증 로직을 직접 넣지 마세요.
-- **엄격한 타입 정의:** TypeScript 사용 시 명확한 사유 없이 `any`를 절대 사용하지 마세요. 모든 함수 입출력 및 데이터 구조에 explicit type/interface를 정의하세요.
-- **규격화된 출력 (Structured Output):** 에이전트 간 통신이나 주요 데이터 전달은 정의된 JSON Schema 규격을 엄격히 따르세요.
+```bash
+# [개발 및 빌드]
+npm run dev           # Vite 개발 서버 실행
+npm run build         # React 앱 생산 빌드 테스트
 
-### 3. 작업 절차 및 Git 규율
-- **원자적 변경 (Atomic Commits):** 코드는 점진적이고 작게 수정하세요. 한 번에 전체 코드베이스를 대규모로 재작성하지 마세요.
-- **기존 코드 보호:** 명시적인 리팩토링 요청이나 삭제 지침이 없는 한, 기존의 유틸리티 함수, 공통 메서드, 테스트 코드를 함부로 삭제하지 마세요.
+# [하네스 검증 단축 명령어]
+npx tsc --noEmit      # TypeScript 타입 검사 (필수)
+npm run lint          # ESLint 코드 스타일 검사
+npm test              # Vitest / Jest 단위 테스트 실행
+🚨 3. 주요 오류 상황별 자가 수정 지침 (Error Handling Rules)
+에이전트는 작업 중 다음과 같은 오류를 마주치면 사용자에게 묻지 않고 즉시 자가 수정(Self-Correction)을 시도해야 한다.
 
----
+1) TypeScript 타입 에러 (Type Errors)
+발생 상황: npx tsc --noEmit 실행 시 Property 'x' does not exist on type 'y' 또는 Type 'any' is not assignable 에러 발생.
 
-## 🚫 피해야 할 사항 (Avoid / Anti-Patterns)
+대응 지침:
 
-### 1. 검증되지 않은 패키지 및 남발 금지
-- **불필요한 패키지 설치 금지:** 프로젝트에 이미 존재하는 유틸리티로 해결할 수 있는지 먼저 확인하고, 신규 `npm` 패키지 설치를 최소화하세요.
-- 패키지를 추가할 때는 기존 환경과의 버전 충돌 여부를 먼저 검증하세요.
+절대로 // @ts-ignore나 any 타입을 남발하여 임시방편으로 해결하지 마라.
 
-### 2. 파괴적 작업 및 민감 정보 유출 금지
-- **암묵적 파일 삭제 금지:** 사용자에게 미리 확인을 받지 않고 소스 코드, 설정 파일, DB 스키마 등을 삭제하지 마세요.
-- **민감 정보 하드코딩 금지:** API 키, DB 패스워드, 개인정보 등을 소스 코드에 절대 하드코딩하지 말고 `.env` 환경 변수를 사용하세요.
+/src/types 디렉터리 내의 interface/type 정의를 수정하거나, 타입 가드(Type Guard) 및 Zod 스키마 추론(z.infer<typeof schema>)을 활용하여 올바른 타입을 재정의하라.
 
-### 3. 바이브 코딩 시 주의사항
-- **무한 루프 재시도 금지:** 동일한 오류로 테스트나 명령어가 3회 연속 실패하면 즉시 중단하고 원인을 분석하여 사용자에게 보고하세요.
-- **요청하지 않은 기능 구현 금지 (Scope Creep):** 프롬프트에서 요청한 기능만 정확히 구현하세요. 지시받지 않은 가상의 기능이나 과도한 설계를 덧붙이지 마세요.
-- **임시 코드 남발 금지:** `// TODO: 나중에 구현` 같은 주석이나 빈 함수 상태로 남겨두지 말고, 작동 가능한 완결된 코드를 작성하세요.
+2) React Hooks & DOM / Rendering 오류
+발생 상황: Rendered more hooks than during the previous render, Hydration/Re-render Infinity Loop 또는 DOM 요소를 참조하지 못하는 에러.
 
----
+대응 지침:
 
-## 🎯 응답 및 소통 방식
+Hook의 조건부 호출을 제거하고 최상단 레벨로 이동시켜라.
 
-- 코드 변경 및 설명은 간결하고 명확하게 작성하세요.
-- 버그 수정 후 답변 시 아래 3가지를 반드시 포함하세요:
-  1. **원인 (Root Cause):** 버그가 발생한 근본 이유
-  2. **수정 방식 (Fix Strategy):** 적용한 해결책
-  3. **검증 결과 (Verification):** 실행한 테스트 명령어 및 통과 여부
+useEffect 내 의존성 배열(Dependency Array) 누락으로 인한 무한 루프 발생 여부를 검토하고 수정하라.
+
+3) LLM API JSON 파싱 및 Zod 검증 에러
+발생 상황: LLM 응답값에 마크다운 블록(```json)이나 설명 텍스트가 섞여 JSON.parse() 실패 또는 Zod Schema Validation 에러 발생 시.
+
+대응 지침:
+
+파싱 로직 실행 전 정규식 기반 Sanitizer 함수를 거쳐 순수 JSON 문자열만 추출하도록 코드를 보완하라.
+
+Schema 검증 실패 시, 에러 메시지를 포함하여 LLM에게 자가 수정 재요청(Self-Correction Prompt)을 전송하는 로직을 작동시켜라.
+
+4) 모듈 및 패키지 누락 (Import / Missing Modules)
+발생 상황: Cannot find module 'x' 또는 Failed to resolve import 에러 발생.
+
+대응 지침:
+
+npm install <package-name> 명령어로 필요한 패키지를 즉시 설치한 후 재검증하라.
+
+경로 별칭(Path Alias, 예: @/components) 설정 문제일 경우 tsconfig.json 및 vite.config.ts 파일의 alias 설정을 동기화하라.
+
+5) LLM API 연동 실패 / 네트워크 타임아웃
+발생 상황: API Key 미설정, 네트워크 오류, LLM 서버 응답 지연 (429/500 에러).
+
+대응 지침:
+
+애플리케이션 화면이 다운되거나 하얗게 뜨지 않도록 try-catch 블록 내에서 미리 준비된 기본 Mock 로드맵 데이터를 즉시 반환하는 Fallback 로직을 가동하라.
+
+📌 4. 개발 시 필수 준수 사항 (Strict Do's & Don'ts)
+✅ 필수 준수 사항 (Do's)
+하네스 루프 준수: 코드 수정 ➡️ npx tsc --noEmit 실행 ➡️ 에러 발생 시 자가 수정 (최대 3회) ➡️ 검증 성공 시에만 완료 보고.
+
+단방향 데이터 흐름 및 컴포넌트 분리:
+
+UI 레이아웃(src/components), 상태/비즈니스 로직 (src/hooks 또는 src/services), 프롬프트/타입 정의 (src/lib, src/types) 간의 경계를 엄격히 분리하라.
+
+CoT (Chain-of-Thought) 적용: LLM 응답 프롬프트에 <thought> 분석 태그를 포함하여 학생의 상태를 선분석한 후 JSON을 출력하도록 구성하라.
+
+마고 맞춤 실무 커리큘럼 제공: 대학식 단순 학술 과목(수치해석 등)이 아닌, React, Node.js, Docker, FastAPI 등 학생들이 포트폴리오에 바로 녹일 수 있는 기술 스택 및 프로젝트 아이디어를 추천하라.
+
+❌ 엄격 금지 사항 (Don'ts)
+🚫 검증 없는 완료 보고 금지: 타입 체크 및 테스트를 통과하지 않은 코드를 두고 "작업을 완수했습니다"라고 답변하는 것을 금지한다.
+
+🚫 any 타입 및 임시 주석 사용 금지: any 타입 지정 금지, ts-ignore 주석 사용 금지.
+
+🚫 비동기 예외 처리 생략 금지: API 호출 및 데이터 파싱 구문에서 try-catch 생략을 금지한다.
+
+🚫 파괴적 작업 직행 금지: .env 파일 삭제, git reset --hard 등 위험한 작업은 실행 전 사용자의 동의를 얻어라.
+
+🔄 5. 하네스 에이전트 실행 파이프라인 (Execution Flow)
+[요청 수신] ➡️ [1. 계획 수립 (Thought)] ➡️ [2. React/Vite 코드 작성 (Action)]
+                        ⬆️                                     │
+                        │                                      ▼
+               [4. 자가 수정 (Retry)] ⬅️ (실패) ⬅️ [3. 타입/빌드 검증 (Validation)]
+                                                               │
+                                                            (성공)
+                                                               ▼
+                                                      [5. 작업 완료 보고]
