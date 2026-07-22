@@ -194,7 +194,7 @@ export default function App() {
         <aside className="flex shrink-0 flex-col gap-4 lg:w-80">
           <ComplexityPanel meta={algorithm.meta} />
           <UseCasePanel meta={algorithm.meta} />
-          <PythonCodePanel code={algorithm.meta.pythonCode} />
+          <PythonCodePanel key={algorithm.meta.id} code={algorithm.meta.pythonCode} />
         </aside>
       </div>
     </div>

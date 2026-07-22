@@ -35,7 +35,10 @@ export const ALGORITHMS: AlgorithmDef[] = [
                 swapped = True
         if not swapped:  # 이미 정렬됐으면 조기 종료
             break
-    return arr`,
+    return arr
+
+
+print(bubble_sort([5, 3, 8, 1, 9, 2]))`,
     },
   },
   {
@@ -62,7 +65,10 @@ export const ALGORITHMS: AlgorithmDef[] = [
                 min_idx = j
         if min_idx != i:
             arr[i], arr[min_idx] = arr[min_idx], arr[i]
-    return arr`,
+    return arr
+
+
+print(selection_sort([5, 3, 8, 1, 9, 2]))`,
     },
   },
   {
@@ -88,7 +94,10 @@ export const ALGORITHMS: AlgorithmDef[] = [
             arr[j + 1] = arr[j]
             j -= 1
         arr[j + 1] = key
-    return arr`,
+    return arr
+
+
+print(insertion_sort([5, 3, 8, 1, 9, 2]))`,
     },
   },
   {
@@ -123,7 +132,10 @@ export const ALGORITHMS: AlgorithmDef[] = [
             result.append(right[j]); j += 1
     result.extend(left[i:])
     result.extend(right[j:])
-    return result`,
+    return result
+
+
+print(merge_sort([5, 3, 8, 1, 9, 2]))`,
     },
   },
   {
@@ -156,7 +168,10 @@ export const ALGORITHMS: AlgorithmDef[] = [
 
         quick_sort(arr, lo, p - 1)
         quick_sort(arr, p + 1, hi)
-    return arr`,
+    return arr
+
+
+print(quick_sort([5, 3, 8, 1, 9, 2]))`,
     },
   },
   {
@@ -203,7 +218,10 @@ export const ALGORITHMS: AlgorithmDef[] = [
     for end in range(n - 1, 0, -1):  # 루트(최댓값)를 뒤로 확정
         arr[0], arr[end] = arr[end], arr[0]
         sift_down(0, end)
-    return arr`,
+    return arr
+
+
+print(heap_sort([5, 3, 8, 1, 9, 2]))`,
     },
   },
   {
@@ -259,7 +277,10 @@ def tree_sort(arr):
         root = insert(root, value)
     result = []
     in_order(root, result)
-    return result`,
+    return result
+
+
+print(tree_sort([5, 3, 8, 1, 9, 2]))`,
     },
   },
   {
@@ -280,7 +301,10 @@ def tree_sort(arr):
     for i, value in enumerate(arr):
         if value == target:
             return i
-    return -1  # 찾지 못함`,
+    return -1  # 찾지 못함
+
+
+print(linear_search([10, 20, 30, 40], 30))`,
     },
   },
   {
@@ -308,7 +332,10 @@ def tree_sort(arr):
             lo = mid + 1
         else:
             hi = mid - 1
-    return -1  # 찾지 못함`,
+    return -1  # 찾지 못함
+
+
+print(binary_search([40, 10, 30, 20], 30))`,
     },
   },
   {
@@ -338,7 +365,11 @@ def bfs(graph, start):
                 visited.append(neighbor)
                 queue.append(neighbor)
 
-    return visited  # 방문 순서`,
+    return visited  # 방문 순서
+
+
+graph = {'A': ['B', 'C'], 'B': ['A', 'D'], 'C': ['A'], 'D': ['B']}
+print(bfs(graph, 'A'))`,
     },
   },
   {
@@ -368,7 +399,11 @@ def bfs(graph, start):
             if neighbor not in visited:
                 stack.append(neighbor)
 
-    return visited  # 방문 순서`,
+    return visited  # 방문 순서
+
+
+graph = {'A': ['B', 'C'], 'B': ['A', 'D'], 'C': ['A'], 'D': ['B']}
+print(dfs(graph, 'A'))`,
     },
   },
   {
@@ -393,7 +428,10 @@ def bfs(graph, start):
         dp[1] = 1
     for i in range(2, n):
         dp[i] = dp[i - 1] + dp[i - 2]  # 이전 결과 재사용 → O(n)
-    return dp`,
+    return dp
+
+
+print(fibonacci_dp(10))`,
     },
   },
 ];
