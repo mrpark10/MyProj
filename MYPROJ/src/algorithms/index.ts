@@ -25,6 +25,17 @@ export const ALGORITHMS: AlgorithmDef[] = [
         { title: '교육용 정렬 개념 학습', detail: '구현이 가장 단순해 정렬의 비교·교환 개념을 처음 배울 때 표준 예제로 쓰입니다.' },
         { title: '거의 정렬된 소규모 데이터 점검', detail: '조기 종료 최적화 덕분에 이미 정렬된 데이터 검증(예: 센서 값이 순서대로 들어왔는지 확인)에 O(n) 으로 동작합니다.' },
       ],
+      pythonCode: `def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n - 1):
+        swapped = False
+        for j in range(n - 1 - i):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+        if not swapped:  # 이미 정렬됐으면 조기 종료
+            break
+    return arr`,
     },
   },
   {
@@ -42,6 +53,16 @@ export const ALGORITHMS: AlgorithmDef[] = [
         { title: '쓰기 비용이 비싼 저장장치', detail: 'EEPROM·플래시 메모리처럼 쓰기 횟수가 수명에 직결되는 임베디드 저장장치에서, 교환 횟수가 최소인 특성이 유리합니다.' },
         { title: '메모리가 극히 제한된 환경', detail: '추가 메모리 없이(O(1)) 제자리 정렬이 가능해 소형 MCU 펌웨어에서 작은 배열을 정렬할 때 쓰입니다.' },
       ],
+      pythonCode: `def selection_sort(arr):
+    n = len(arr)
+    for i in range(n - 1):
+        min_idx = i
+        for j in range(i + 1, n):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        if min_idx != i:
+            arr[i], arr[min_idx] = arr[min_idx], arr[i]
+    return arr`,
     },
   },
   {
@@ -59,6 +80,15 @@ export const ALGORITHMS: AlgorithmDef[] = [
         { title: '하이브리드 정렬의 내부 엔진', detail: 'V8·JDK 등 실제 표준 라이브러리의 정렬(TimSort/IntroSort)은 작은 부분 배열(보통 16개 이하)에서 삽입 정렬로 전환해 성능을 끌어올립니다.' },
         { title: '실시간 스트리밍 데이터 삽입', detail: '이미 정렬된 리더보드나 랭킹 목록에 새 점수가 하나씩 들어올 때, 전체 재정렬 없이 알맞은 위치에 O(n) 으로 끼워 넣습니다.' },
       ],
+      pythonCode: `def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]
+        j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
+    return arr`,
     },
   },
   {
@@ -76,6 +106,24 @@ export const ALGORITHMS: AlgorithmDef[] = [
         { title: '외부 정렬 (대용량 파일)', detail: '메모리에 다 올릴 수 없는 수십 GB 로그 파일을 조각내 정렬한 뒤 순차적으로 병합하는 External Merge Sort 의 핵심입니다. 순차 읽기만 하므로 디스크에 최적입니다.' },
         { title: '안정 정렬이 필요한 다중 기준 정렬', detail: '"부서별 → 이름순"처럼 여러 번 정렬할 때 이전 정렬 순서가 보존되어야 합니다. Java Collections.sort 와 Python sorted 가 이 방식(TimSort)을 씁니다.' },
       ],
+      pythonCode: `def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    mid = len(arr) // 2
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i]); i += 1
+        else:
+            result.append(right[j]); j += 1
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result`,
     },
   },
   {
@@ -93,6 +141,22 @@ export const ALGORITHMS: AlgorithmDef[] = [
         { title: '대용량 메모리 내 정렬 엔진', detail: 'C++ std::sort 의 IntroSort 기반으로, 캐시 지역성이 좋아 실제 하드웨어에서 같은 O(n log n) 알고리즘보다 빠릅니다. 데이터베이스의 ORDER BY 인메모리 정렬에 쓰입니다.' },
         { title: 'K번째 원소 찾기 (QuickSelect)', detail: '분할 아이디어를 그대로 활용해 전체를 정렬하지 않고 상위 K개·중앙값을 평균 O(n) 에 찾습니다. 추천 시스템의 Top-K 랭킹 추출에 활용됩니다.' },
       ],
+      pythonCode: `def quick_sort(arr, lo=0, hi=None):
+    if hi is None:
+        hi = len(arr) - 1
+    if lo < hi:
+        pivot = arr[hi]
+        i = lo - 1
+        for j in range(lo, hi):
+            if arr[j] < pivot:
+                i += 1
+                arr[i], arr[j] = arr[j], arr[i]
+        arr[i + 1], arr[hi] = arr[hi], arr[i + 1]
+        p = i + 1
+
+        quick_sort(arr, lo, p - 1)
+        quick_sort(arr, p + 1, hi)
+    return arr`,
     },
   },
   {
@@ -117,6 +181,29 @@ export const ALGORITHMS: AlgorithmDef[] = [
           detail: '퀵 정렬과 달리 최악에도 O(n log n) 이고 추가 메모리가 O(1) 이라, 리눅스 커널과 임베디드처럼 메모리와 응답시간 상한이 중요한 환경에서 선택됩니다.',
         },
       ],
+      pythonCode: `def heap_sort(arr):
+    n = len(arr)
+
+    def sift_down(root, size):
+        while True:
+            largest = root
+            left, right = 2 * root + 1, 2 * root + 2
+            if left < size and arr[left] > arr[largest]:
+                largest = left
+            if right < size and arr[right] > arr[largest]:
+                largest = right
+            if largest == root:
+                break
+            arr[root], arr[largest] = arr[largest], arr[root]
+            root = largest
+
+    for i in range(n // 2 - 1, -1, -1):  # 최대 힙 구성
+        sift_down(i, n)
+
+    for end in range(n - 1, 0, -1):  # 루트(최댓값)를 뒤로 확정
+        arr[0], arr[end] = arr[end], arr[0]
+        sift_down(0, end)
+    return arr`,
     },
   },
   {
@@ -141,6 +228,38 @@ export const ALGORITHMS: AlgorithmDef[] = [
           detail: '데이터가 계속 추가되는 랭킹·로그 시스템에서, 전체를 다시 정렬하지 않고 삽입 시점마다 O(log n) 으로 정렬 상태를 유지할 수 있습니다.',
         },
       ],
+      pythonCode: `class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+
+def insert(node, value):
+    if node is None:
+        return Node(value)
+    if value < node.value:
+        node.left = insert(node.left, value)
+    else:
+        node.right = insert(node.right, value)
+    return node
+
+
+def in_order(node, result):
+    if node is None:
+        return
+    in_order(node.left, result)
+    result.append(node.value)
+    in_order(node.right, result)
+
+
+def tree_sort(arr):
+    root = None
+    for value in arr:
+        root = insert(root, value)
+    result = []
+    in_order(root, result)
+    return result`,
     },
   },
   {
@@ -157,6 +276,11 @@ export const ALGORITHMS: AlgorithmDef[] = [
         { title: '정렬되지 않은 소규모 데이터 조회', detail: '설정값 목록이나 게임의 인벤토리처럼 항목이 수십 개 수준이면 인덱스를 만드는 비용이 더 크므로 선형 탐색이 실용적입니다.' },
         { title: '연결 리스트 순회 탐색', detail: '임의 접근이 불가능한 연결 리스트·스트림 데이터에서는 이진 탐색을 쓸 수 없어 선형 탐색이 유일한 선택입니다.' },
       ],
+      pythonCode: `def linear_search(arr, target):
+    for i, value in enumerate(arr):
+        if value == target:
+            return i
+    return -1  # 찾지 못함`,
     },
   },
   {
@@ -173,6 +297,18 @@ export const ALGORITHMS: AlgorithmDef[] = [
         { title: '데이터베이스 인덱스 조회', detail: 'RDBMS 의 B-Tree 인덱스는 이진 탐색을 다진 트리로 확장한 구조입니다. 수억 건의 레코드에서 특정 키를 몇 번의 디스크 접근만으로 찾아냅니다.' },
         { title: '파라메트릭 서치 (최적값 찾기)', detail: '"조건을 만족하는 최소 용량"처럼 답이 단조적인 최적화 문제에서, 답 자체를 이분 탐색해 O(log n) 에 찾습니다. 서버 오토스케일링 임계치 계산 등에 쓰입니다.' },
       ],
+      pythonCode: `def binary_search(arr, target):
+    arr = sorted(arr)  # 이진 탐색은 정렬된 배열이 전제
+    lo, hi = 0, len(arr) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return -1  # 찾지 못함`,
     },
   },
   {
@@ -189,6 +325,20 @@ export const ALGORITHMS: AlgorithmDef[] = [
         { title: 'SNS 친구 추천 (n촌 관계)', detail: '페이스북·링크드인의 "2촌 친구" 추천은 내 노드에서 BFS 를 2단계까지 수행해 찾습니다. 가까운 관계부터 탐색하는 특성이 그대로 쓰입니다.' },
         { title: '게임 길찾기 · 최단 경로', detail: '격자 맵에서 가중치가 동일할 때 BFS 는 최소 이동 칸 수를 보장합니다. 퍼즐 게임의 최소 이동 횟수 계산에 표준으로 쓰입니다.' },
       ],
+      pythonCode: `from collections import deque
+
+def bfs(graph, start):
+    visited = [start]
+    queue = deque([start])
+
+    while queue:
+        node = queue.popleft()
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.append(neighbor)
+                queue.append(neighbor)
+
+    return visited  # 방문 순서`,
     },
   },
   {
@@ -205,6 +355,20 @@ export const ALGORITHMS: AlgorithmDef[] = [
         { title: '빌드 의존성 해석 (위상 정렬)', detail: 'npm·Gradle 이 패키지 의존성 순서를 정하고 순환 참조를 탐지할 때 DFS 기반 위상 정렬을 사용합니다.' },
         { title: '미로 생성 및 백트래킹 탐색', detail: '게임의 절차적 미로 생성, 스도쿠 풀이처럼 "가능한 경로를 끝까지 시도하고 실패하면 되돌아가는" 문제의 기본 골격입니다.' },
       ],
+      pythonCode: `def dfs(graph, start):
+    visited = []
+    stack = [start]
+
+    while stack:
+        node = stack.pop()
+        if node in visited:
+            continue
+        visited.append(node)
+        for neighbor in reversed(graph[node]):
+            if neighbor not in visited:
+                stack.append(neighbor)
+
+    return visited  # 방문 순서`,
     },
   },
   {
@@ -221,6 +385,15 @@ export const ALGORITHMS: AlgorithmDef[] = [
         { title: '자원 배분 최적화 (배낭 문제)', detail: '한정된 서버 자원에 작업을 배치해 처리량을 최대화하는 스케줄링이 대표적인 DP 응용입니다. 부분 문제의 최적해를 재사용합니다.' },
         { title: '문자열 유사도 · diff 알고리즘', detail: 'Git 의 diff, 맞춤법 검사기의 편집 거리(Edit Distance)는 DP 테이블로 두 문자열의 최소 편집 횟수를 계산합니다.' },
       ],
+      pythonCode: `def fibonacci_dp(n):
+    if n <= 0:
+        return []
+    dp = [0] * n
+    if n > 1:
+        dp[1] = 1
+    for i in range(2, n):
+        dp[i] = dp[i - 1] + dp[i - 2]  # 이전 결과 재사용 → O(n)
+    return dp`,
     },
   },
 ];

@@ -23,4 +23,10 @@ describe('알고리즘 카탈로그 메타데이터', () => {
       expect(algorithm.meta.useCases.length).toBeGreaterThan(0);
     }
   });
+
+  it('모든 알고리즘이 Python 참고 구현을 가진다', () => {
+    for (const algorithm of ALGORITHMS) {
+      expect(algorithm.meta.pythonCode).toContain('def ');
+    }
+  });
 });

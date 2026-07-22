@@ -18,7 +18,7 @@ export function ControlPanel({ player, onShuffle }: ControlPanelProps) {
       <div className="flex flex-wrap items-center gap-2">
         <button
           type="button"
-          onClick={player.toggle}
+          onClick={playing ? player.pause : player.play}
           className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-500"
         >
           {playing ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}

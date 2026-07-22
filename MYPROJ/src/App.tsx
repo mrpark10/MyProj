@@ -11,6 +11,7 @@ import { isWebGLAvailable } from '@/utils/capabilities';
 import { ComplexityPanel } from '@/components/ComplexityPanel';
 import { ControlPanel } from '@/components/ControlPanel';
 import { UseCasePanel } from '@/components/UseCasePanel';
+import { PythonCodePanel } from '@/components/PythonCodePanel';
 import { ArrayCanvas } from '@/components/visualization/2d/ArrayCanvas';
 import { GraphCanvas } from '@/components/visualization/2d/GraphCanvas';
 import { ArrayBars3D } from '@/components/visualization/3d/ArrayBars3D';
@@ -193,6 +194,7 @@ export default function App() {
         <aside className="flex shrink-0 flex-col gap-4 lg:w-80">
           <ComplexityPanel meta={algorithm.meta} />
           <UseCasePanel meta={algorithm.meta} />
+          <PythonCodePanel code={algorithm.meta.pythonCode} />
         </aside>
       </div>
     </div>

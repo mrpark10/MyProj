@@ -44,6 +44,8 @@ export const algorithmMetaSchema = z.object({
   useCases: z.array(useCaseSchema).min(1),
   /** 정렬 알고리즘의 안정성 여부 (해당 없으면 생략) */
   stable: z.boolean().optional(),
+  /** 참고용 Python 구현 (실무 활용 사례 아래 코드 패널에 표시) */
+  pythonCode: z.string().min(1),
 });
 export type AlgorithmMeta = z.infer<typeof algorithmMetaSchema>;
 
